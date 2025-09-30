@@ -10,3 +10,9 @@ class User(AbstractUser):
     
     def __str__(self):
         return self.username
+    
+    def save(self, *args, **kwargs):
+        # If user is superuser, automatically set role to admin
+        if self.is_superuser:
+            self.role = 'admin'
+        super().save(*args, **kwargs)
